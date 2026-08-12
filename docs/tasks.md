@@ -1,84 +1,106 @@
 # Tasks
 
+# Phase 1 — Project Setup
 
-# Phase 1 - Environment
+## Environment
 
-- [x] Install Git
-- [x] Configure Git
-- [x] Configure GitHub SSH
-- [x] Install Node.js
-- [x] Install Cursor
-- [x] Install Codex CLI
-- [x] Configure Codex Sandbox
+- [ ] Create frontend project with React + Vite
+- [ ] Create backend project with Node.js + Express
+- [ ] Configure project structure
+- [ ] Configure development scripts
 
 
-# Phase 2 - Project Foundation
+---
 
-- [x] Create project directory
-- [x] Initialize Git repository
-- [x] Create AGENTS.md
-- [x] Create README.md
-- [x] Create .gitignore
-- [x] Create .env.example
-- [x] Create docs directory
-- [x] Create src directory
-- [x] Create tests directory
-- [x] Create product.md
-- [x] Create tasks.md
+# Phase 2 — Backend Development
 
 
-# Phase 3 - AI Workflow
+## Server Setup
+
+- [ ] Initialize backend package
+- [ ] Install Express
+- [ ] Create backend entry point
+- [ ] Configure API server
 
 
-## AI Roles
+## Database
 
-- [ ] Define ChatGPT workflow
-- [ ] Define Codex workflow
-- [ ] Define Claude workflow
-- [ ] Define Cursor workflow
-
-
-## Planning Workflow
-
-- [ ] Define requirement analysis process
-- [ ] Define project planning process
-- [ ] Define architecture design process
+- [ ] Install SQLite dependency
+- [ ] Create database connection
+- [ ] Create tasks table
+- [ ] Create database initialization script
 
 
-## Coding Workflow
+## Task API
 
-- [ ] Define AI coding process
-- [ ] Define code modification rules
-- [ ] Define testing process
-
-
-## Review Workflow
-
-- [ ] Define AI code review process
-- [ ] Define bug fixing process
+- [ ] Implement GET /api/tasks
+- [ ] Implement POST /api/tasks
+- [ ] Implement PUT /api/tasks/:id
+- [ ] Implement DELETE /api/tasks/:id
 
 
-## Git Workflow
+---
 
-- [ ] Configure GitHub repository
-- [ ] Define branch strategy
-- [ ] Define commit strategy
+# Phase 3 — Frontend Development
 
 
-# Phase 4 - First Real Project
+## React Setup
 
-- [ ] Select project
-- [ ] Write requirements
-- [ ] Design architecture
-- [ ] Build MVP
-- [ ] Test
-- [ ] Review
-- [ ] Deploy
+- [ ] Initialize React application
+- [ ] Configure frontend structure
+- [ ] Create main application layout
 
 
-# Phase 5 - Optimization
+## Task Interface
 
-- [ ] Improve prompts
-- [ ] Improve AI instructions
-- [ ] Create reusable templates
-- [ ] Optimize workflow
+- [ ] Create task list component
+- [ ] Create task creation form
+- [ ] Add task status update
+- [ ] Add task deletion
+
+
+## API Integration
+
+- [ ] Connect frontend with backend API
+- [ ] Handle loading state
+- [ ] Handle error state
+
+
+---
+
+# Phase 4 — Testing
+
+
+## Backend Testing
+
+- [ ] Test API endpoints
+- [ ] Test database operations
+
+
+## Frontend Testing
+
+- [ ] Test UI components
+- [ ] Test user interactions
+
+
+---
+
+# Phase 5 — Code Quality
+
+
+- [ ] Review project structure
+- [ ] Remove unnecessary dependencies
+- [ ] Improve documentation
+- [ ] Run final tests
+
+
+---
+
+# Phase 6 — Future Improvements
+
+
+- [ ] Add user authentication
+- [ ] Add task priority
+- [ ] Add task categories
+- [ ] Add AI task planning
+- [ ] Add natural language task creation
