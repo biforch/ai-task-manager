@@ -3,14 +3,14 @@ import { getTasks } from "../api/tasks";
 import TaskCard from "./TaskCard";
 
 
-function TaskList() {
+function TaskList({ refresh }) {
 
   const [tasks, setTasks] = useState([]);
 
 
   useEffect(() => {
     loadTasks();
-  }, []);
+  }, [refresh]);
 
 
   const loadTasks = async () => {
