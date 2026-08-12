@@ -7,7 +7,7 @@ const db = require("../database/db");
 
 
 
-const generateTasks = (req,res)=>{
+const generateTasks = async(req,res)=>{
 
 
     const {
@@ -27,7 +27,7 @@ const generateTasks = (req,res)=>{
 
 
     const tasks =
-        generateAIResponse(goal);
+         await generateAIResponse(goal);
 
 
 

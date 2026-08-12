@@ -1,26 +1,35 @@
-const generateAIResponse = (goal) => {
-
-    return [
-        {
-            title: `Understand ${goal}`,
-            description: "Learn the basic concepts",
-            status: "todo"
-        },
-        {
-            title: `Practice ${goal}`,
-            description: "Build a small project",
-            status: "todo"
-        },
-        {
-            title: `Review ${goal}`,
-            description: "Summarize and improve knowledge",
-            status: "todo"
-        }
-    ];
-
-};
+const {
+    buildPrompt
+}=require("./prompt");
 
 
-module.exports = {
+const {
+    askAI
+}=require("./llmService");
+
+
+
+
+async function generateAIResponse(goal){
+
+
+    const prompt =
+        buildPrompt(goal);
+
+
+
+    const result =
+        await askAI(prompt);
+
+
+
+    return JSON.parse(result);
+
+
+}
+
+
+
+module.exports={
     generateAIResponse
 };
