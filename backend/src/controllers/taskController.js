@@ -120,9 +120,40 @@ const updateTask = (req, res) => {
   );
 };
 
+const deleteTask = (req, res) => {
+  const { id } = req.params;
+
+  const sql = `
+    DELETE FROM tasks
+    WHERE id = ?
+  `;
+
+  db.run(sql, [id], function(err) {
+
+    if (err) {
+      return res.status(500).json({
+        error: err.message
+      });
+    }
+
+
+    if (this.changes === 0) {
+      return res.status(404).json({
+        error: "Task not found"
+      });
+    }
+
+
+    res.json({
+      message: "Task deleted"
+    });
+
+  });
+};
 
 module.exports = {
   getTasks,
   createTask,
-  updateTask
+  updateTask,
+  deleteTask
 };
