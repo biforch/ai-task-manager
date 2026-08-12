@@ -90,3 +90,74 @@ No production features have been implemented yet.
 - Build incrementally
 - Validate each change
 - Maintain clean Git history
+
+
+# AI Agent Feature
+
+## Overview
+
+AI Task Manager will provide an AI assistant
+that can help users create and organize tasks.
+
+## User Story
+
+As a user,
+
+I can describe my goal using natural language.
+
+Example:
+
+"Prepare a React learning plan for this week"
+
+The AI will generate structured tasks.
+
+## AI Workflow
+
+User Input
+
+↓
+
+AI Agent
+
+↓
+
+Task Generation
+
+↓
+
+Save Tasks
+
+↓
+
+Display Task List
+
+
+## Example
+
+Input:
+
+"Build a personal AI coding workflow"
+
+
+Output:
+
+Task 1:
+Create development environment
+
+Task 2:
+Learn Git workflow
+
+Task 3:
+Build first AI project
+
+Task 4:
+Deploy application
+
+
+## Future Features
+
+- Task planning
+- Task breakdown
+- Priority suggestion
+- Deadline suggestion
+- Progress analysis

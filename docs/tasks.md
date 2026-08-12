@@ -104,3 +104,41 @@
 - [ ] Add task categories
 - [ ] Add AI task planning
 - [ ] Add natural language task creation
+
+
+
+
+# AI Agent Development
+
+## Phase 4
+
+### Task 1
+
+Create AI service layer
+
+Status:
+TODO
+
+
+### Task 2
+
+Create AI task generation API
+
+Status:
+TODO
+
+
+### Task 3
+
+Connect frontend AI input
+
+Status:
+TODO
+
+
+### Task 4
+
+Generate tasks from user goals
+
+Status:
+TODO
