@@ -142,3 +142,40 @@ Generate tasks from user goals
 
 Status:
 TODO
+
+# Phase 4 AI Agent
+
+
+## AI-001
+
+Create AI service layer
+
+Status:
+TODO
+
+
+
+## AI-002
+
+Create AI generation API
+
+Status:
+TODO
+
+
+
+## AI-003
+
+Connect frontend AI input
+
+Status:
+TODO
+
+
+
+## AI-004
+
+Generate tasks automatically
+
+Status:
+TODO
