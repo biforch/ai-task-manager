@@ -1,6 +1,7 @@
 const db = require("../database/db");
 
 
+// GET ALL TASKS
 const getTasks = (req, res) => {
 
   db.all(
@@ -22,6 +23,8 @@ const getTasks = (req, res) => {
 };
 
 
+
+// CREATE TASK
 const createTask = (req, res) => {
 
   const {
@@ -46,17 +49,20 @@ const createTask = (req, res) => {
 
       if(err){
         return res.status(500).json({
-          error: err.message
+          error:err.message
         });
       }
 
 
       res.status(201).json({
-        id: this.lastID,
+
+        id:this.lastID,
         title,
         description,
-        status: status || "todo"
+        status:status || "todo"
+
       });
+
 
     }
   );
@@ -64,94 +70,141 @@ const createTask = (req, res) => {
 };
 
 
-const updateTask = (req, res) => {
-  const { id } = req.params;
+
+
+// UPDATE TASK STATUS
+const updateTask = (req,res)=>{
+
+  const {id}=req.params;
 
   const {
-    title,
-    description,
     status
-  } = req.body;
+  }=req.body;
 
-
-  const sql = `
-    UPDATE tasks
-    SET 
-      title = ?,
-      description = ?,
-      status = ?,
-      updated_at = CURRENT_TIMESTAMP
-    WHERE id = ?
-  `;
 
 
   db.run(
-    sql,
+    `
+    UPDATE tasks
+
+    SET
+      status=?,
+      updated_at=CURRENT_TIMESTAMP
+
+    WHERE id=?
+    `,
     [
-      title,
-      description,
       status,
       id
     ],
-    function(err) {
 
-      if (err) {
+    function(err){
+
+      if(err){
+
         return res.status(500).json({
-          error: err.message
+          error:err.message
         });
+
       }
 
 
-      if (this.changes === 0) {
+
+      if(this.changes===0){
+
         return res.status(404).json({
-          error: "Task not found"
+          error:"Task not found"
         });
+
       }
+
+
+
+      db.get(
+        "SELECT * FROM tasks WHERE id=?",
+        [id],
+
+        (err,row)=>{
+
+
+          if(err){
+
+            return res.status(500).json({
+              error:err.message
+            });
+
+          }
+
+
+          res.json(row);
+
+
+        }
+      );
+
+
+    }
+
+  );
+
+
+};
+
+
+
+
+// DELETE TASK
+const deleteTask = (req,res)=>{
+
+
+  const {id}=req.params;
+
+
+  db.run(
+    `
+    DELETE FROM tasks
+    WHERE id=?
+    `,
+    [id],
+
+
+    function(err){
+
+
+      if(err){
+
+        return res.status(500).json({
+          error:err.message
+        });
+
+      }
+
+
+      if(this.changes===0){
+
+        return res.status(404).json({
+          error:"Task not found"
+        });
+
+      }
+
 
 
       res.json({
-        id,
-        title,
-        description,
-        status
+        message:"Task deleted"
       });
+
 
     }
   );
+
+
 };
 
-const deleteTask = (req, res) => {
-  const { id } = req.params;
-
-  const sql = `
-    DELETE FROM tasks
-    WHERE id = ?
-  `;
-
-  db.run(sql, [id], function(err) {
-
-    if (err) {
-      return res.status(500).json({
-        error: err.message
-      });
-    }
 
 
-    if (this.changes === 0) {
-      return res.status(404).json({
-        error: "Task not found"
-      });
-    }
 
-
-    res.json({
-      message: "Task deleted"
-    });
-
-  });
-};
-
-module.exports = {
+module.exports={
   getTasks,
   createTask,
   updateTask,
