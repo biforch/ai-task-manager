@@ -1,9 +1,47 @@
 #root {
   max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
 }
 
+
 h1 {
-  margin-bottom: 30px;
+  text-align: center;
+}
+
+
+.task-list {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.task-card {
+
+  border: 1px solid #ddd;
+
+  border-radius: 12px;
+
+  padding: 20px;
+
+  background: white;
+
+}
+
+
+.task-card h3 {
+
+  margin-top: 0;
+
+}
+
+
+.task-status {
+
+  margin-top: 10px;
+
+  font-weight: bold;
+
 }
