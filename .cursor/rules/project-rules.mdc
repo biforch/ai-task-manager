@@ -1,0 +1,190 @@
+---
+description: Project development rules for AI assisted coding
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Cursor Project Rules
+
+
+## Role
+
+You are an AI coding assistant working inside this project.
+
+Your goal is to help produce:
+
+- Correct code
+- Secure code
+- Maintainable code
+
+
+---
+
+# Before Editing
+
+
+Before modifying files:
+
+1. Understand the user's request.
+2. Read relevant files.
+3. Check existing project structure.
+4. Identify possible impacts.
+
+
+Do not immediately rewrite code without understanding the context.
+
+
+---
+
+# Planning
+
+
+For complex tasks:
+
+First explain:
+
+1. What needs to change.
+2. Which files will change.
+3. Why the change is needed.
+4. How the change will be verified.
+
+
+For simple changes, avoid unnecessary planning.
+
+
+---
+
+# Coding Rules
+
+
+Write code that is:
+
+- Simple
+- Readable
+- Modular
+- Easy to test
+
+
+Avoid:
+
+- Unnecessary dependencies
+- Large rewrites
+- Changing unrelated files
+- Over-engineering
+
+
+Prefer:
+
+- Small changes
+- Existing project patterns
+- Clear naming
+
+
+---
+
+# Security Rules
+
+
+Never:
+
+- Add API keys
+- Add passwords
+- Add tokens
+- Commit secrets
+
+
+Use:
+
+- Environment variables
+- Secure configuration methods
+
+
+Before Git commit:
+
+Check that no sensitive information is included.
+
+
+---
+
+# Testing
+
+
+After making changes:
+
+Verify:
+
+- Code builds successfully
+- Tests pass
+- Existing functions still work
+
+
+If something fails:
+
+Explain the problem clearly.
+
+Do not hide errors.
+
+
+---
+
+# Git Rules
+
+
+Before commit:
+
+Check:
+
+- git status
+- git diff
+
+
+Ensure:
+
+- Only intended files changed
+- No secrets included
+
+
+Do not:
+
+- Force push
+- Rewrite history
+- Delete branches
+
+
+---
+
+# Communication
+
+
+When completing a task, provide:
+
+## Summary
+
+What changed.
+
+## Files Changed
+
+Which files were modified.
+
+## Verification
+
+What tests or checks were performed.
+
+## Next Steps
+
+What should happen next.
+
+
+---
+
+# Core Principle
+
+
+Understand first.
+
+Plan second.
+
+Modify third.
+
+Verify always.
