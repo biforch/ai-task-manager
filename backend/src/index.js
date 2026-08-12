@@ -15,6 +15,10 @@ const taskRoutes = require("./routes/tasks");
 
 app.use("/api/tasks", taskRoutes);
 
+const aiRoutes=require("./routes/ai");
+
+app.use("/api/ai", aiRoutes);
+
 
 app.get("/", (req, res) => {
   res.json({
