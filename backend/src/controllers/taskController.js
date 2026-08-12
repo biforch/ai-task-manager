@@ -1,16 +1,27 @@
+const db = require("../database/db");
+
+
 const getTasks = (req, res) => {
-    const tasks = [
-      {
-        id: 1,
-        title: "Learn AI Coding Workflow",
-        description: "Build AI development environment",
-        status: "todo"
+
+  db.all(
+    "SELECT * FROM tasks",
+    [],
+    (err, rows) => {
+
+      if (err) {
+        return res.status(500).json({
+          error: err.message
+        });
       }
-    ];
-  
-    res.json(tasks);
-  };
-  
-  module.exports = {
-    getTasks
-  };
+
+      res.json(rows);
+
+    }
+  );
+
+};
+
+
+module.exports = {
+  getTasks
+};
