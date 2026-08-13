@@ -72,6 +72,27 @@ Saving creates:
 
 The old endpoint `POST /api/ai/generate` is deprecated and returns `410 Gone`.
 
+### Goal-first Workspace
+
+Users can:
+
+- Start on a **Goal Dashboard** with saved goals, progress, and pending task counts
+- Create goals through a full-screen AI flow with an explicit **draft not saved** banner
+- Confirm save to persist goal + tasks, then land directly on the new goal detail page
+- Manage tasks inside a goal: add tasks with `goal_id`, set Todo / Doing / Done, delete tasks with confirmation
+- View completed tasks in a collapsible **Completed (N)** section (not physically hidden from data)
+- Use a separate **Inbox** for manual tasks where `goal_id = null`
+- Deep-link to a saved goal via `?goalId=<id>`; invalid IDs return to the dashboard with an error message
+
+The AI goal input includes a short disclaimer that AI output is general guidance, not professional advice.
+
+AI plan output constraints:
+
+- `estimatedMinutes` is the active effort to complete one task once (integer **1–480**)
+- It must not represent sleep duration, waiting time, plan span, or multi-day totals
+- Habit goals should use executable actions with realistic minutes (for example, a 5-minute logging task instead of "sleep 8 hours" as minutes)
+- Invalid AI JSON or out-of-range values return `502 AI_INVALID_RESPONSE`; the UI shows a friendly retry message and keeps the user's goal input
+
 ### Goal List and Progress
 
 Users can:
@@ -79,7 +100,6 @@ Users can:
 - View all saved goals with task counts and completion percentage
 - Open a goal to see its description and related tasks
 - Update task status from goal detail; progress refreshes automatically
-- Return to the full task list (includes manual tasks with `goal_id = null`)
 
 Completion percentage is computed on the backend:
 
@@ -134,7 +154,7 @@ Completion percentage is computed on the backend:
 The following are **not** completed and should not be documented as shipped features:
 
 - Goal edit or delete
-- Task content editing beyond status changes
+- Task content editing beyond status changes and deletion
 - User accounts / authentication
 - AI Memory or multi-step agent orchestration
 - Search, categories, deadlines, pagination, or advanced progress analytics

@@ -91,12 +91,24 @@
 - [x] Error states for plan and save
 
 
+## Goal-first Workspace UI
+
+- [x] Goal Dashboard as default home
+- [x] Full-screen AI goal create flow with unsaved draft banner
+- [x] Confirm Save opens new goal detail automatically
+- [x] Goal detail: add tasks, Todo / Doing / Done, delete with confirmation
+- [x] Completed tasks collapsed section
+- [x] Inbox for manual tasks (`goal_id = null`)
+- [x] URL sync via `?goalId=<id>`
+- [x] AI disclaimer on goal input
+
+
 ## Goal Views
 
 - [x] Goal list with completion progress
 - [x] Goal detail with related tasks
 - [x] Loading / error / empty states
-- [x] Refresh goal list and all-task list after save or status update
+- [x] Refresh dashboard and detail after save or task changes
 
 
 ---
@@ -108,6 +120,7 @@
 
 - [x] Test AI plan endpoint success path
 - [x] Test invalid LLM output handling
+- [x] Test estimatedMinutes out-of-range AI plan rejection
 - [x] Test goals save transaction
 - [x] Test goals validation and DB failure rollback
 - [x] Test GET /api/goals list, stats, detail, 404, invalid id, and DB error sanitization

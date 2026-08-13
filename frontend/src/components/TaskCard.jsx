@@ -1,32 +1,40 @@
-import StatusButton from "./StatusButton";
+import TaskStatusControl from "./TaskStatusControl";
 
+function TaskCard({ task, onUpdate, onDelete, compact }) {
+  const handleDelete = () => {
+    if (!onDelete) {
+      return;
+    }
 
-function TaskCard({ task, onUpdate }) {
+    const confirmed = window.confirm(
+      `确定删除任务「${task.title}」吗？此操作无法撤销。`
+    );
+
+    if (confirmed) {
+      onDelete(task.id);
+    }
+  };
 
   return (
-    <div className="task-card">
+    <article className={`task-card${compact ? " task-card-compact" : ""}`}>
+      <div className="task-card-header">
+        <h3 className="task-card-title">{task.title}</h3>
+        {onDelete && (
+          <button
+            type="button"
+            className="button-secondary task-delete-button"
+            onClick={handleDelete}
+          >
+            删除
+          </button>
+        )}
+      </div>
 
-      <h2>
-        {task.title}
-      </h2>
+      {task.description && <p className="task-card-description">{task.description}</p>}
 
-      <p>
-        {task.description}
-      </p>
-
-      <p>
-        Status: {task.status}
-      </p>
-
-
-      <StatusButton
-        task={task}
-        onUpdate={onUpdate}
-      />
-
-    </div>
+      <TaskStatusControl task={task} onUpdate={onUpdate} />
+    </article>
   );
 }
-
 
 export default TaskCard;

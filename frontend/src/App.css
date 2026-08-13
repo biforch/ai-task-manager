@@ -1,16 +1,129 @@
-.ai-generator,
-.task-form,
-.goal-plan-preview {
-  margin: 24px auto;
-  padding: 20px;
-  max-width: 720px;
+.app-shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+.app-header {
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.app-subtitle {
+  margin: 8px 0 0;
+  opacity: 0.8;
+}
+
+.app-main {
+  display: grid;
+  gap: 16px;
+}
+
+.global-error {
+  margin: 0;
+}
+
+.workspace-panel {
   border: 1px solid var(--border);
   border-radius: 12px;
+  padding: 20px;
   text-align: left;
 }
 
-.ai-generator input,
-.task-form input {
+.panel-title {
+  margin: 0 0 12px;
+}
+
+.subsection-title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.back-button {
+  margin-bottom: 16px;
+}
+
+.button-primary,
+.button-secondary,
+.task-form button,
+.goal-plan-actions button,
+.goal-create-input button {
+  margin-right: 8px;
+  margin-top: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.button-primary,
+.task-form button[type="submit"],
+.goal-plan-actions .button-primary,
+.goal-create-input .button-primary {
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.button-secondary,
+.goal-plan-actions .button-secondary {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.button-primary:disabled,
+.button-secondary:disabled,
+.task-form button:disabled,
+.goal-create-input button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dashboard-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.goal-dashboard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.goal-dashboard-card {
+  width: 100%;
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+  text-align: left;
+}
+
+.goal-dashboard-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.goal-dashboard-card-meta {
+  opacity: 0.85;
+}
+
+.empty-state {
+  display: grid;
+  gap: 8px;
+}
+
+.goal-create-flow input,
+.task-form input,
+.inbox-task-form input {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 12px;
@@ -21,28 +134,45 @@
   color: var(--text-h);
 }
 
-.ai-generator button,
-.task-form button,
-.goal-plan-actions button {
-  margin-right: 8px;
-  padding: 10px 16px;
-  border: 1px solid var(--accent-border);
-  border-radius: 8px;
-  background: var(--accent-bg);
-  color: var(--text-h);
-  cursor: pointer;
+.goal-create-input {
+  margin-top: 16px;
 }
 
-.ai-generator button:disabled,
-.task-form button:disabled,
-.goal-plan-actions button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.error-message {
+.plan-error-panel {
   margin-top: 12px;
-  color: #dc2626;
+}
+
+.plan-error-panel .button-secondary {
+  margin-top: 8px;
+}
+
+.disclaimer-message {
+  margin: 12px 0 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent-bg) 35%, transparent);
+  color: var(--text);
+}
+
+.draft-banner {
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #f59e0b;
+  background: #fffbeb;
+  color: #92400e;
+  font-weight: 600;
+}
+
+.draft-help {
+  margin: 0 0 16px;
+  opacity: 0.85;
+}
+
+.goal-plan-preview {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
 }
 
 .goal-plan-task-list {
@@ -58,10 +188,24 @@
   margin-top: 16px;
 }
 
+.error-message {
+  margin-top: 12px;
+  color: #dc2626;
+}
+
+.status-message {
+  margin-top: 12px;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+.task-section {
+  margin-top: 24px;
+}
+
 .task-list {
   display: grid;
   gap: 16px;
-  padding: 0 20px 40px;
 }
 
 .task-card {
@@ -71,77 +215,53 @@
   text-align: left;
 }
 
-.task-form {
-  display: grid;
+.task-card-compact {
+  opacity: 0.92;
+}
+
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.task-card-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.task-card-description {
+  margin: 8px 0 12px;
+}
+
+.task-status-control {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.section-heading {
-  margin: 24px 20px 0;
-  text-align: left;
-}
-
-.status-message {
-  margin-top: 12px;
-  color: var(--text);
+.task-status-label {
+  font-size: 0.9rem;
   opacity: 0.85;
 }
 
-.goal-list,
-.goal-detail {
-  margin: 24px auto;
-  padding: 20px;
-  max-width: 720px;
+.task-status-control select {
+  padding: 6px 10px;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  text-align: left;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
 }
 
-.goal-list-items {
-  list-style: none;
-  margin: 16px 0 0;
-  padding: 0;
+.task-delete-button {
+  flex-shrink: 0;
+}
+
+.task-form {
   display: grid;
-  gap: 12px;
-}
-
-.goal-list-item {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--text-h);
-  cursor: pointer;
-  text-align: left;
-}
-
-.goal-list-item-selected {
-  border-color: var(--accent-border);
-  background: var(--accent-bg);
-}
-
-.goal-list-title {
-  font-weight: 600;
-}
-
-.goal-list-progress {
-  white-space: nowrap;
-  opacity: 0.85;
-}
-
-.goal-detail-back {
-  margin-bottom: 16px;
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--text-h);
-  cursor: pointer;
+  gap: 8px;
+  margin-top: 20px;
 }
 
 .goal-detail-description {
@@ -149,6 +269,33 @@
 }
 
 .goal-detail-progress {
-  margin: 12px 0 16px;
+  margin: 12px 0 0;
   font-weight: 600;
+}
+
+.completed-tasks-section {
+  margin-top: 24px;
+}
+
+.completed-tasks-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+  text-align: left;
+  font-weight: 600;
+}
+
+.completed-task-list {
+  margin-top: 12px;
+}
+
+.completed-tasks-toggle-icon {
+  opacity: 0.7;
 }

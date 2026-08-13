@@ -12,7 +12,7 @@ The project has a working MVP for manual task management, the **AI goal planning
 4. User confirms before anything is saved (`POST /api/goals`)
 5. User can browse goals, open goal detail, and see backend-computed completion percentage
 
-Current automated test status: **backend 36 tests passed, 0 failed**.
+Current automated test status: **backend 36 tests passed, 0 failed**. Frontend builds with `npm run build`.
 
 ## Completed
 
@@ -63,6 +63,10 @@ Current automated test status: **backend 36 tests passed, 0 failed**.
 - [x] AI goal input, preview, and confirm save flow
 - [x] Goal list with completion progress
 - [x] Goal detail with related tasks and refreshKey-based refresh
+- [x] Goal-first Dashboard, full-screen AI create flow, and Inbox
+- [x] Task Todo / Doing / Done controls in goal detail and inbox
+- [x] Task delete with confirmation (goal detail + inbox)
+- [x] URL deep-link via `?goalId=<id>`
 
 ### Phase 4 — Testing
 
@@ -122,7 +126,7 @@ Current automated test status: **backend 36 tests passed, 0 failed**.
 - [ ] Task categories
 - [ ] Search / pagination / filtering
 - [ ] Goal edit or delete
-- [ ] Task content editing beyond status changes
+- [ ] Task title/description editing beyond status changes and deletion
 - [ ] Frontend automated tests
 - [ ] End-to-end tests
 - [ ] Idempotency-Key support
@@ -148,7 +152,7 @@ Current automated test status: **backend 36 tests passed, 0 failed**.
 - Task title: max 200 chars
 - Task description: max 2000 chars
 - Task count: 1–10
-- Estimated minutes per task: 1–480
+- Estimated minutes per task: 1–480 (AI plan tasks must be integers in this range; prompt defines this as one-time active effort, not sleep/waiting/multi-day totals)
 
 ## Error Codes
 
@@ -156,7 +160,7 @@ Current automated test status: **backend 36 tests passed, 0 failed**.
 |---|---|---|
 | `VALIDATION_ERROR` | 400 | Client request invalid |
 | `NOT_FOUND` | 404 | Task or goal not found |
-| `AI_INVALID_RESPONSE` | 502 | LLM output failed server validation |
+| `AI_INVALID_RESPONSE` | 502 | LLM output failed server validation (frontend shows friendly retry copy) |
 | `AI_SERVICE_ERROR` | 502 | Upstream AI call failed or returned unusable payload |
 | `DATABASE_ERROR` | 500 | Database operation failed |
 | `DEPRECATED` | 410 | Old generate endpoint |

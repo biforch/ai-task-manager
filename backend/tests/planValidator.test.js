@@ -67,3 +67,22 @@ test("parseAndValidatePlan rejects too many tasks", () => {
   assert.equal(result.ok, false);
   assert.match(result.error, /must contain between/);
 });
+
+test("parseAndValidatePlan rejects estimatedMinutes outside 1-480", () => {
+  const raw = JSON.stringify({
+    goalTitle: "Sleep better",
+    tasks: [
+      {
+        title: "Sleep 8 hours tonight",
+        description: "Get a full night of sleep",
+        priority: "high",
+        estimatedMinutes: 481
+      }
+    ]
+  });
+
+  const result = parseAndValidatePlan(raw);
+
+  assert.equal(result.ok, false);
+  assert.match(result.error, /estimatedMinutes must be between 1 and 480/);
+});

@@ -46,15 +46,11 @@ Technology:
 
 Responsibilities:
 
-- Provide user interface
-- Display task list
-- Create tasks manually
-- Preview AI-generated goal plans
-- Confirm save before persisting AI drafts
-- View goal list with completion progress
-- Open goal detail and manage related tasks
-- Update task status
-- Delete tasks
+- Provide a Goal-first workspace (Dashboard, full-screen AI create flow, Inbox)
+- Preview AI-generated goal plans with an explicit unsaved draft banner
+- Confirm save before persisting AI drafts, then open the saved goal detail
+- Manage goal tasks with Todo / Doing / Done states and confirmed deletion
+- Deep-link goal detail via `?goalId=<id>`
 - Communicate with backend API
 
 
@@ -359,6 +355,8 @@ Delete a task.
 
 Shared limits include task title max 200 chars, description max 2000 chars, optional priority values `low|medium|high`, optional `estimated_minutes` between 1 and 480, and optional positive integer `goal_id`.
 
+AI prompt guidance in `backend/src/ai/prompt.js` further clarifies that `estimatedMinutes` means one-time active effort per task, not sleep/waiting/multi-day duration, and repeats the 1–480 integer requirement in the JSON contract.
+
 
 ## LLM Call Settings
 
@@ -386,6 +384,7 @@ Rules:
 
 - Do not return raw SQLite messages, SQL fragments, file paths, API keys, or Authorization headers to clients
 - Server-side logs may record error names/messages for diagnosis, but must not log secrets
+- Frontend maps `AI_INVALID_RESPONSE` from `POST /api/ai/plan` to a friendly Chinese retry message instead of exposing validator field paths
 
 
 # 8. Application Flow
@@ -435,6 +434,35 @@ planValidator -> SQLite transaction
  |
 Task List Refresh
 ```
+
+
+## Goal-first Workspace Flow
+
+```
+Goal Dashboard (GET /api/goals)
+ |
+ +--> New Goal (full-screen AI flow)
+ |      |
+ |      POST /api/ai/plan -> draft preview ("not saved")
+ |      |
+ |      Confirm Save -> POST /api/goals -> open Goal Detail (?goalId=)
+ |
+ +--> Goal Detail (?goalId=)
+ |      |
+ |      GET /api/goals/:id
+ |      POST /api/tasks (goal_id set)
+ |      PUT /api/tasks/:id (todo | doing | done)
+ |      DELETE /api/tasks/:id (confirmed)
+ |
+ +--> Inbox
+        GET /api/tasks -> filter goal_id = null
+```
+
+URL behavior:
+
+- Entering Goal Detail sets `?goalId=<id>`
+- Dashboard / Inbox / Create Goal clear `goalId`
+- App bootstrap reads `goalId`; missing goal returns to Dashboard with an error message
 
 
 ## Goal List and Detail Flow
