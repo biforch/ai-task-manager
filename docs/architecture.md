@@ -51,6 +51,8 @@ Responsibilities:
 - Create tasks manually
 - Preview AI-generated goal plans
 - Confirm save before persisting AI drafts
+- View goal list with completion progress
+- Open goal detail and manage related tasks
 - Update task status
 - Delete tasks
 - Communicate with backend API
@@ -71,6 +73,7 @@ Responsibilities:
 - Validate client input and AI output
 - Generate AI drafts without writing to the database
 - Save confirmed goals and tasks in SQLite transactions
+- Query goal list/detail with shared completion stats
 - Manage task operations
 - Communicate with database
 
@@ -120,6 +123,7 @@ ai-task-manager
 │   │   ├── controllers
 │   │   ├── database
 │   │   ├── routes
+│   │   ├── services
 │   │   └── validators
 │   ├── tests
 │   ├── package.json
@@ -256,6 +260,47 @@ Behavior:
 - Rolls back entirely if any task insert fails
 
 
+## Get Goals
+
+Method:
+
+```
+GET /api/goals
+```
+
+Description:
+
+Return all goals with aggregated task statistics.
+
+Response fields on each goal include:
+
+- `taskCount`, `todoCount`, `doingCount`, `doneCount`
+- `completedPercentage` computed on the server (`0` when `taskCount === 0`)
+
+
+## Get Goal Detail
+
+Method:
+
+```
+GET /api/goals/:id
+```
+
+Description:
+
+Return one goal, its related tasks, and the same stats object used by the list endpoint.
+
+Behavior:
+
+- Invalid id returns `400 VALIDATION_ERROR`
+- Missing goal returns `404 NOT_FOUND`
+- Database failures return generic `500 DATABASE_ERROR` without SQLite details
+
+Implementation note:
+
+- List and detail share `backend/src/services/goalStats.js` for SQL aggregation and stats construction
+
+
 ## Deprecated AI Generate
 
 Method:
@@ -334,6 +379,7 @@ The service also validates `response.choices[0].message.content` and rejects emp
 - LLM text that fails JSON contract validation returns `502` with `AI_INVALID_RESPONSE`
 - Database failures return generic `500` messages with `DATABASE_ERROR`
 - Missing tasks return `404` with `NOT_FOUND`
+- Missing goals return `404` with `NOT_FOUND`
 - Deprecated generate endpoint returns `410` with `DEPRECATED`
 
 Rules:
@@ -388,6 +434,25 @@ planValidator -> SQLite transaction
  |
  |
 Task List Refresh
+```
+
+
+## Goal List and Detail Flow
+
+```
+Goal List (GET /api/goals)
+ |
+ |
+User selects goal
+ |
+ |
+Goal Detail (GET /api/goals/:id)
+ |
+ |
+Task status update (PUT /api/tasks/:id)
+ |
+ |
+Refresh goal detail stats + goal list + all-task list (refreshKey)
 ```
 
 

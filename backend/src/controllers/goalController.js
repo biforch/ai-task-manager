@@ -3,6 +3,23 @@ const {
   validateGoalRequest,
   normalizeGoalRequest
 } = require("../ai/planValidator");
+const {
+  fetchAllGoalsWithStats,
+  fetchGoalWithStatsById,
+  fetchTasksByGoalId,
+  parseGoalId
+} = require("../services/goalStats");
+
+function logDatabaseError(action, err) {
+  console.error(`Database error while ${action}:`, err.message);
+}
+
+function respondDatabaseError(res, action) {
+  return res.status(500).json({
+    error: `Failed to ${action}`,
+    code: "DATABASE_ERROR"
+  });
+}
 
 function saveGoalWithTasks(payload) {
   return new Promise((resolve, reject) => {
@@ -124,6 +141,48 @@ function saveGoalWithTasks(payload) {
   });
 }
 
+const getGoals = async (req, res) => {
+  try {
+    const goals = await fetchAllGoalsWithStats();
+    return res.json(goals);
+  } catch (error) {
+    logDatabaseError("fetch goals", error);
+    return respondDatabaseError(res, "fetch goals");
+  }
+};
+
+const getGoalById = async (req, res) => {
+  const goalId = parseGoalId(req.params.id);
+
+  if (!goalId) {
+    return res.status(400).json({
+      error: "Invalid goal id",
+      code: "VALIDATION_ERROR"
+    });
+  }
+
+  try {
+    const goal = await fetchGoalWithStatsById(goalId);
+
+    if (!goal) {
+      return res.status(404).json({
+        error: "Goal not found",
+        code: "NOT_FOUND"
+      });
+    }
+
+    const tasks = await fetchTasksByGoalId(goalId);
+
+    return res.json({
+      goal,
+      tasks
+    });
+  } catch (error) {
+    logDatabaseError("fetch goal", error);
+    return respondDatabaseError(res, "fetch goal");
+  }
+};
+
 const createGoal = async (req, res) => {
   const validationError = validateGoalRequest(req.body);
 
@@ -149,5 +208,7 @@ const createGoal = async (req, res) => {
 
 module.exports = {
   createGoal,
+  getGoals,
+  getGoalById,
   saveGoalWithTasks
 };

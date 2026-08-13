@@ -72,6 +72,20 @@ Saving creates:
 
 The old endpoint `POST /api/ai/generate` is deprecated and returns `410 Gone`.
 
+### Goal List and Progress
+
+Users can:
+
+- View all saved goals with task counts and completion percentage
+- Open a goal to see its description and related tasks
+- Update task status from goal detail; progress refreshes automatically
+- Return to the full task list (includes manual tasks with `goal_id = null`)
+
+Completion percentage is computed on the backend:
+
+- `0%` when a goal has zero tasks
+- otherwise `Math.round(doneCount / taskCount * 100)`
+
 ---
 
 ## Data Model
@@ -107,6 +121,8 @@ The old endpoint `POST /api/ai/generate` is deprecated and returns `410 Gone`.
 
 | Endpoint | Purpose |
 |---|---|
+| `GET /api/goals` | List goals with task stats and completion percentage |
+| `GET /api/goals/:id` | Get one goal, its tasks, and the same stats object |
 | `POST /api/ai/plan` | Generate validated draft only |
 | `POST /api/goals` | Save confirmed goal + tasks in one transaction |
 | `POST /api/ai/generate` | Deprecated |
@@ -117,11 +133,11 @@ The old endpoint `POST /api/ai/generate` is deprecated and returns `410 Gone`.
 
 The following are **not** completed and should not be documented as shipped features:
 
-- Goal list or goal detail UI
+- Goal edit or delete
 - Task content editing beyond status changes
 - User accounts / authentication
 - AI Memory or multi-step agent orchestration
-- Search, categories, deadlines, progress analytics
+- Search, categories, deadlines, pagination, or advanced progress analytics
 
 ---
 
@@ -129,7 +145,7 @@ The following are **not** completed and should not be documented as shipped feat
 
 Possible improvements:
 
-- Goal list and completion tracking
+- Goal editing and deletion
 - Task editing and reordering
 - User accounts
 - Task categories and search

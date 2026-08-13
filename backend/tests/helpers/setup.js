@@ -8,6 +8,7 @@ const MODULES_TO_RESET = [
   path.join(SRC_ROOT, "app.js"),
   path.join(SRC_ROOT, "controllers/aiController.js"),
   path.join(SRC_ROOT, "controllers/goalController.js"),
+  path.join(SRC_ROOT, "services/goalStats.js"),
   path.join(SRC_ROOT, "controllers/taskController.js"),
   path.join(SRC_ROOT, "routes/tasks.js"),
   path.join(SRC_ROOT, "routes/goals.js"),

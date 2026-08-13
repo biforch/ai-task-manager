@@ -12,6 +12,7 @@ AI 目标拆解任务管理器：用户用自然语言描述目标，由 AI 生�
   2. `POST /api/ai/plan` 生成并校验任务草案（不写库）
   3. 前端预览草案
   4. 用户确认后 `POST /api/goals` 在事务中保存 goal 与关联 tasks
+- Goal 列表与详情：查看各目标完成进度，进入目标查看关联任务
 
 ## 技术栈
 
@@ -62,6 +63,8 @@ AI 目标拆解任务管理器：用户用自然语言描述目标，由 AI 生�
 | POST | `/api/tasks` | 手动创建任务 |
 | PUT | `/api/tasks/:id` | 更新任务状态 |
 | DELETE | `/api/tasks/:id` | 删除任务 |
+| GET | `/api/goals` | 获取目标列表（含完成统计） |
+| GET | `/api/goals/:id` | 获取单个目标详情与关联任务 |
 | POST | `/api/ai/plan` | 生成 AI 任务草案（不写库） |
 | POST | `/api/goals` | 确认保存 goal + tasks（事务） |
 | POST | `/api/ai/generate` | 已废弃，返回 410 |
@@ -106,10 +109,11 @@ npm test
 
 以下能力**尚未完成**，不要当作现有功能使用：
 
-- Goal 列表 / Goal 详情页
+- Goal 编辑 / 删除
 - 任务内容编辑（当前仅支持状态更新）
 - 用户认证
 - AI Memory / 复杂 Agent 编排
+- 分页、搜索、筛选
 
 ## 文档
 

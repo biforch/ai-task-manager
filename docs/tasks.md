@@ -49,6 +49,8 @@
 
 - [x] Implement POST /api/ai/plan (draft only)
 - [x] Implement POST /api/goals (transaction save)
+- [x] Implement GET /api/goals (list with stats)
+- [x] Implement GET /api/goals/:id (detail with tasks)
 - [x] Deprecate POST /api/ai/generate with 410 Gone
 - [x] Add LLM output validation and request limits
 - [x] Harden LLM call timeout, max_tokens, and empty-response checks
@@ -89,6 +91,14 @@
 - [x] Error states for plan and save
 
 
+## Goal Views
+
+- [x] Goal list with completion progress
+- [x] Goal detail with related tasks
+- [x] Loading / error / empty states
+- [x] Refresh goal list and all-task list after save or status update
+
+
 ---
 
 # Phase 4 — Testing
@@ -100,6 +110,7 @@
 - [x] Test invalid LLM output handling
 - [x] Test goals save transaction
 - [x] Test goals validation and DB failure rollback
+- [x] Test GET /api/goals list, stats, detail, 404, invalid id, and DB error sanitization
 - [x] Test migration idempotency and legacy schema upgrade
 - [x] Test manual task create validation
 - [x] Test task update status validation
@@ -123,7 +134,7 @@
 - [x] Update project status documentation
 - [ ] Review project structure
 - [ ] Remove unnecessary dependencies
-- [x] Run final tests across frontend and backend (backend: 29 tests passed)
+- [x] Run final tests across frontend and backend (backend: 36 tests passed)
 
 
 ---
@@ -135,7 +146,6 @@
 - [ ] Add task categories
 - [ ] Add AI task planning enhancements (deadlines, progress analysis)
 - [ ] Add natural language task creation outside goal flow
-- [ ] Add goal list and completion views
 - [ ] Add Idempotency-Key support for confirmed goal saves
 - [ ] Add SQLite WAL / busy_timeout tuning
 - [ ] Add AI Memory or multi-step agent orchestration
