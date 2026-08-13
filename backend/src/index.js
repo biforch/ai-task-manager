@@ -1,31 +1,21 @@
 require("dotenv").config();
 
-const express = require("express");
-const cors = require("cors");
-
-const taskRoutes = require("./routes/tasks");
-const aiRoutes = require("./routes/ai");
-
-const app = express();
+const { createApp } = require("./app");
+const { migrate } = require("./database/migrate");
 
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.json());
-app.use(cors());
+async function start() {
+  await migrate();
 
-// Routes
-app.use("/api/tasks", taskRoutes);
-app.use("/api/ai", aiRoutes);
+  const app = createApp();
 
-// Test API
-app.get("/", (req, res) => {
-  res.json({
-    message: "AI Task Manager API running"
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
-});
+}
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+start().catch((error) => {
+  console.error("Failed to start server:", error);
+  process.exit(1);
 });

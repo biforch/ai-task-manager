@@ -1,124 +1,35 @@
-const {
-    generateAIResponse
-} = require("../ai/aiService");
+const aiService = require("../ai/aiService");
+const { validateGoalInput } = require("../ai/planValidator");
 
+const planGoal = async (req, res) => {
+  const { goal } = req.body;
+  const validationError = validateGoalInput(goal);
 
-const db = require("../database/db");
+  if (validationError) {
+    return res.status(400).json({
+      error: validationError,
+      code: "VALIDATION_ERROR"
+    });
+  }
 
-
-
-const generateTasks = async(req,res)=>{
-
-
-    const {
-        goal
-    } = req.body;
-
-
-
-    if(!goal){
-
-        return res.status(400).json({
-            error:"Goal is required"
-        });
-
+  try {
+    const plan = await aiService.generatePlan(goal.trim());
+    return res.json(plan);
+  } catch (error) {
+    if (error.code === "AI_INVALID_RESPONSE") {
+      return res.status(502).json({
+        error: error.message,
+        code: "AI_INVALID_RESPONSE"
+      });
     }
 
-
-
-    const tasks =
-         await generateAIResponse(goal);
-
-
-
-    const insertTasks = tasks.map(task=>{
-
-
-        return new Promise((resolve,reject)=>{
-
-
-            db.run(
-                `
-                INSERT INTO tasks
-                (
-                title,
-                description,
-                status
-                )
-                VALUES
-                (?,?,?)
-                `,
-                [
-                    task.title,
-                    task.description,
-                    task.status
-                ],
-
-
-                function(err){
-
-
-                    if(err){
-
-                        reject(err);
-
-                    }
-                    else{
-
-                        resolve({
-                            id:this.lastID,
-                            ...task
-                        });
-
-                    }
-
-
-                }
-
-            );
-
-
-        });
-
-
+    return res.status(502).json({
+      error: "AI service unavailable",
+      code: "AI_SERVICE_ERROR"
     });
-
-
-
-    Promise.all(insertTasks)
-
-    .then(result=>{
-
-
-        res.json({
-
-            message:"AI tasks generated",
-
-            tasks:result
-
-        });
-
-
-    })
-
-    .catch(err=>{
-
-
-        res.status(500).json({
-
-            error:err.message
-
-        });
-
-
-    });
-
-
-
+  }
 };
 
-
-
-module.exports={
-    generateTasks
+module.exports = {
+  planGoal
 };

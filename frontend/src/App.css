@@ -1,72 +1,77 @@
-#root {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 30px;
+.ai-generator,
+.task-form,
+.goal-plan-preview {
+  margin: 24px auto;
+  padding: 20px;
+  max-width: 720px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: left;
 }
 
-
-h1 {
-  text-align: center;
+.ai-generator input,
+.task-form input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
 }
 
+.ai-generator button,
+.task-form button,
+.goal-plan-actions button {
+  margin-right: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  background: var(--accent-bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.ai-generator button:disabled,
+.task-form button:disabled,
+.goal-plan-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-message {
+  margin-top: 12px;
+  color: #dc2626;
+}
+
+.goal-plan-task-list {
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.goal-plan-task-item {
+  margin-bottom: 12px;
+}
+
+.goal-plan-actions {
+  margin-top: 16px;
+}
 
 .task-list {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  gap: 16px;
+  padding: 0 20px 40px;
 }
-
 
 .task-card {
-
-  border: 1px solid #ddd;
-
+  border: 1px solid var(--border);
   border-radius: 12px;
-
-  padding: 20px;
-
-  background: white;
-
-}
-
-
-.task-card h3 {
-
-  margin-top: 0;
-
-}
-
-
-.task-status {
-
-  margin-top: 10px;
-
-  font-weight: bold;
-
+  padding: 16px;
+  text-align: left;
 }
 
 .task-form {
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 30px;
-
-}
-
-
-.task-form input {
-
-  padding: 10px;
-  font-size: 16px;
-
-}
-
-
-.task-form button {
-
-  padding: 10px;
-  cursor: pointer;
-
+  display: grid;
+  gap: 8px;
 }

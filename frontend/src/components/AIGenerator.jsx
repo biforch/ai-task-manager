@@ -1,113 +1,104 @@
 import { useState } from "react";
-import axios from "axios";
 
+import { planGoal } from "../api/ai";
+import { saveGoal } from "../api/goals";
+import GoalPlanPreview from "./GoalPlanPreview";
 
 function AIGenerator({ onGenerated }) {
+  const [goal, setGoal] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+  const [saveError, setSaveError] = useState("");
+  const [draft, setDraft] = useState(null);
 
+  const generatePlan = async () => {
+    if (!goal.trim()) {
+      return;
+    }
 
-    const [goal,setGoal] = useState("");
+    try {
+      setLoading(true);
+      setError("");
+      setSaveError("");
+      setDraft(null);
 
-    const [loading,setLoading] = useState(false);
+      const response = await planGoal(goal.trim());
+      setDraft(response.data);
+    } catch (requestError) {
+      const message =
+        requestError.response?.data?.error || "Failed to generate plan";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const confirmSave = async () => {
+    if (!draft) {
+      return;
+    }
 
+    try {
+      setSaving(true);
+      setSaveError("");
 
-    const generateTasks = async()=>{
+      await saveGoal({
+        goalTitle: draft.goalTitle,
+        goalDescription: goal.trim(),
+        tasks: draft.tasks
+      });
 
+      setGoal("");
+      setDraft(null);
 
-        if(!goal){
-            return;
-        }
+      if (onGenerated) {
+        onGenerated();
+      }
+    } catch (requestError) {
+      const message =
+        requestError.response?.data?.error || "Failed to save goal";
+      setSaveError(message);
+    } finally {
+      setSaving(false);
+    }
+  };
 
+  const cancelPreview = () => {
+    setDraft(null);
+    setSaveError("");
+  };
 
-        try{
+  return (
+    <div className="ai-generator">
+      <h2>AI Goal Planner</h2>
 
+      <input
+        value={goal}
+        onChange={(event) => setGoal(event.target.value)}
+        placeholder="例如：30天学会React"
+        disabled={loading || saving}
+      />
 
-            setLoading(true);
+      <button
+        type="button"
+        onClick={generatePlan}
+        disabled={loading || saving || !goal.trim()}
+      >
+        {loading ? "Generating..." : "Generate Plan"}
+      </button>
 
+      {error && <p className="error-message">{error}</p>}
 
-            await axios.post(
-                "http://localhost:3000/api/ai/generate",
-                {
-                    goal
-                }
-            );
-
-
-            setGoal("");
-
-
-            if(onGenerated){
-
-                onGenerated();
-
-            }
-
-
-        }
-        catch(error){
-
-            console.error(
-                "AI generate failed:",
-                error
-            );
-
-        }
-        finally{
-
-            setLoading(false);
-
-        }
-
-
-    };
-
-
-
-    return (
-
-        <div className="ai-generator">
-
-
-            <h2>
-                AI Task Planner
-            </h2>
-
-
-            <input
-
-                value={goal}
-
-                onChange={
-                    e=>setGoal(e.target.value)
-                }
-
-                placeholder="例如：30天学会React"
-
-            />
-
-
-            <button
-                onClick={generateTasks}
-                disabled={loading}
-            >
-
-                {
-                    loading
-                    ?
-                    "Generating..."
-                    :
-                    "Generate Tasks"
-                }
-
-            </button>
-
-
-        </div>
-
-    );
-
-
+      <GoalPlanPreview
+        plan={draft}
+        onConfirm={confirmSave}
+        onCancel={cancelPreview}
+        saving={saving}
+        error={saveError}
+      />
+    </div>
+  );
 }
-
 
 export default AIGenerator;

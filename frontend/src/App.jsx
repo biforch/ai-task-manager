@@ -25,9 +25,7 @@ function App() {
     <div>
 
 
-      <h1>
-        AI Task Manager
-      </h1>
+      <h1>AI Task Manager</h1>
 
 
 
