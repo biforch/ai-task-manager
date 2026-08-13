@@ -83,20 +83,32 @@ PORT=3000
 ### 2. 启动后端
 
 ```bash
-cd backend
-npm install
-npm run dev
+cd backend && npm run dev
 ```
+
+（首次运行前在 `backend/` 目录执行 `npm install`。）
 
 服务启动时会自动执行幂等数据库迁移。
 
 ### 3. 启动前端
+
+默认方式：
 
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
+在 **Windows + 本地 PAC/代理** 环境下，Vite 默认 `localhost` 监听可能导致浏览器无法访问。推荐使用 IPv4 监听：
+
+```bash
+cd frontend && npm run dev:ipv4
+```
+
+然后在浏览器打开：**http://127.0.0.1:5173**
+
+说明：这是本地 PAC/代理环境下的兼容启动方式，不影响 API 地址（后端仍为 `http://localhost:3000`）。
 
 ### 4. 运行测试
 
